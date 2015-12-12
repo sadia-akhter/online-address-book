@@ -6,7 +6,21 @@ Plug-ins:
 Apache Maven 
 Tomcat v8.0
 
+Installed software:
+node version: v5.0.0
+npm version: 3.3.9
+bower version: 1.6.8
+
 setup
 ======
 1. setup a maven web project following the instructions from the project 
    https://github.com/sadia-akhter/helloMavenWeb
+2. setup the front end:
+   a) initialze bower
+         $ bower init
+   b) bower install angular --save
+         $ bower install angular --save
+   c) install bootstrap
+         $ bower install bootstrap --save
+         
+         
