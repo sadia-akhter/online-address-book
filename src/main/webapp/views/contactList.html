@@ -1,0 +1,17 @@
+<div class="col-xs-4" ng-controller="contactListCtrl">
+   <div class="panel">
+      <table class="table">
+         <thead>
+            <th></th>
+            <th class="text-center">All Contacts</th>
+            <th class="text-right"><span class="glyphicon glyphicon-plus make_cursor" ng-click="addNewContact()"></span></th>
+         </thead>
+         <tbody>
+            <tr ng-repeat="contact in contacts | orderBy: ['firstName', 'lastName']"
+               ng-class="getContactClass(contact)" ng-click="selectContact(contact)" >
+               <td colspan="3" class="make_cursor">{{contact.firstName + " " + contact.lastName }}</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>
