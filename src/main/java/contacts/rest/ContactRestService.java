@@ -32,16 +32,7 @@ public class ContactRestService {
    @GET
    @Produces(MediaType.APPLICATION_JSON)
    public List<Contact> getAllContactsInJSON() { // http://localhost:8080/onlineAddressBook/rest/contacts/
-      System.out.println("inside ContactRestService");
-      List<Contact> contacts = new ArrayList<Contact>();
-      Contact c = new Contact("Sherlock", "Holmes");
-      contacts.add(c);
-      c = new Contact("Harry", "Potter");
-      contacts.add(c);
-      c = new Contact("Robert", "Langdon");
-      contacts.add(c);
-      
-      return contacts;
+      return this.contactService.getAllContacts();
    }
    
 }

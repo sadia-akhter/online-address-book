@@ -4,25 +4,37 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Contact {
-
-	private String firstName;
-	private String lastName;
+	// fieldnames are consistent with the database
+	private int contact_id;
+	private String firstname;
+	private String lastname;
+	private String[] emails;
 	
 	public Contact(String fname, String lname) {
-		firstName = fname;
-		lastName = lname;
+		firstname = fname;
+		lastname = lname;
+	}
+
+	public Contact(int id, String fname, String lname) {
+		contact_id = id;
+		firstname = fname;
+		lastname = lname;
+	}
+
+	public int getContactId() {
+		return contact_id;
 	}
 	
 	public String getFirstName() {
-		return firstName;
+		return firstname;
 	}
 	
 	public String getLastName() {
-		return lastName;
+		return lastname;
 	}
 	
 	@Override
 	public String toString() {
-		return firstName + " " + lastName;
+		return firstname + " " + lastname;
 	}
 }
