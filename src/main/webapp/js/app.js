@@ -1,4 +1,4 @@
-angular.module('addressBook', [])
+angular.module('addressBook', ['services'])
 .controller('appContlr', ['$scope', 
 function($scope) {
 

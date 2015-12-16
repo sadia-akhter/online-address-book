@@ -1,3 +1,5 @@
+[Reference: http://draptik.github.io/blog/2013/07/13/angularjs-example-using-a-java-restful-web-service/]
+
 System
 =======
 OS: OSX Yosemite version 10.10.5
@@ -6,7 +8,8 @@ Plug-ins:
 Apache Maven 
 Tomcat v8.0
 
-Installed software:
+Installed software
+-------------------
 node version: v5.0.0
 npm version: 3.3.9
 bower version: 1.6.8
@@ -16,11 +19,190 @@ setup
 1. setup a maven web project following the instructions from the project 
    https://github.com/sadia-akhter/helloMavenWeb
 2. setup the front end:
-   a) initialze bower
+   a) open a terminal, go to webapp directory
+   b) from this directory initialize bower
          $ bower init
-   b) bower install angular --save
+   b) install angular
          $ bower install angular --save
    c) install bootstrap
          $ bower install bootstrap --save
+   d) install ngResource
+         $ bower install angular-resource --save
          
+3. setup the back end
+   a) create necessary files so that the project has following file structure:
+   - onlineAddressBook
+        - pom.xml
+		- README
+        - src  
+             - main
+                  - java
+                       - contacts
+                            - controller
+                                 - DataManipulation.java
+                                 - DataManipulationInt.java
+                            - di
+                                 - ApplicationSetup.java
+                                 - ContactModule.java
+                            - model
+                                 - Contact.java
+                            - rest
+                                 - ContactRestService.java
+                            - service
+                                 - ContactService.java
+                                 - ContactServiceInt.java
+                  - webapp
+                       - bower_component
+                            - angular
+                            - bootstrap
+                            - jquery
+                       - css
+                            - app.css
+                       - js
+                            - controllers
+                                 - contactListController.js
+                            - services
+                                 - contacts.js
+                            - app.js
+                       - META_INF
+                       - views
+                            - contactList.html
+                            - content.html
+                            - header.html
+                       - WEB-INF
+                            - web.xml
+                       - bower.json
+                       - index.html
+                       - index.jsp  
+                       
+                       
+   b) update the pom.xml file to include the following properties and dependencies
+   
+   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <jersey.version>1.17.1</jersey.version>
+      <guice.version>3.0</guice.version>
+      <guava.version>r09</guava.version>
+  </properties>
+  
+  <dependencies>
+  <!-- RESTful web service: Jersey ====================================== -->
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-bundle</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+	  <artifactId>jersey-server</artifactId>
+      <version>${jersey.version}</version>
+      </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-servlet</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-json</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+    
+    <!-- Jackson (mapping JSON lists for AngularJS) ======================== -->
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+      <version>1.9.12</version>
+    </dependency>
+    
+    <!-- Guice ============================================================= -->
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-guice</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+
+    <!-- Required for bypassing web.xml via Guice. Used in TestServlet.java -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+		
+    <!-- Unit testing ====================================================== -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-grizzly2</artifactId>
+      <version>${jersey.version}</version>
+      <scope>test</scope>
+    </dependency>
+		
+    <!--  MySQL -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.6</version>
+    </dependency>
+  </dependencies>
+  
+   c) update the web.xml file to include the following:
+  <servlet>
+    <servlet-name>jersey-serlvet</servlet-name>
+
+    <servlet-class>
+      com.sun.jersey.spi.container.servlet.ServletContainer
+    </servlet-class>
+
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>contacts.rest</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>0</param-value>
+    </init-param>
+    <init-param>
+      <param-name>listings</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>readonly</param-name>
+      <param-value>false</param-value>
+    </init-param>	
+
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>jersey-serlvet</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
          

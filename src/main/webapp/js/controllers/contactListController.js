@@ -1,8 +1,9 @@
 angular.module('addressBook')
 .constant('contactActiveClass', 'btn-default')
-.controller('contactListCtrl', ['$scope', 'contactActiveClass',
-function($scope, contactActiveClass){
-
+.controller('contactListCtrl', ['$scope', 'contactActiveClass', 'ContactsFactory',
+function($scope, contactActiveClass, ContactsFactory){
+	$scope.contacts = ContactsFactory.query();
+/*
    $scope.contacts = [
                       {
                           "id": 1,
@@ -69,7 +70,7 @@ function($scope, contactActiveClass){
                           }
                        }
                     ]
-	
+	*/
 /*	
    $scope.contacts = contacts.getContacts();
    $scope.selectedContact = contacts.getSelectedContact();
