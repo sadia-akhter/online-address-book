@@ -2,8 +2,7 @@ package contacts.di;
 
 import com.google.inject.AbstractModule;
 import contacts.controller.*;
-import contacts.service.ContactServiceInt;
-import contacts.service.ContactService;
+import contacts.service.*;
 
 public class ContactModule extends AbstractModule {
     @Override
@@ -11,5 +10,8 @@ public class ContactModule extends AbstractModule {
 
         bind(DataManipulationInt.class).to(DataManipulation.class);
         bind(ContactServiceInt.class).to(ContactService.class);
+
+        // Email service
+        bind(EmailServiceInt.class).to(EmailService.class);
     }
 }

@@ -8,7 +8,6 @@ public class Contact {
 	private int contact_id;
 	private String firstname;
 	private String lastname;
-	private String[] emails;
 	
 	public Contact(String fname, String lname) {
 		firstname = fname;
@@ -32,9 +31,11 @@ public class Contact {
 	public String getLastName() {
 		return lastname;
 	}
-	
+		
 	@Override
 	public String toString() {
-		return firstname + " " + lastname;
+		StringBuilder result = new StringBuilder();
+		result.append(firstname + " " + lastname + "\n");		
+		return result.toString();
 	}
 }

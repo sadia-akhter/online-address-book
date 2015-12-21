@@ -1,15 +1,9 @@
 package contacts.rest;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -32,7 +26,11 @@ public class ContactRestService {
    @GET
    @Produces(MediaType.APPLICATION_JSON)
    public List<Contact> getAllContactsInJSON() { // http://localhost:8080/onlineAddressBook/rest/contacts/
-      return this.contactService.getAllContacts();
+      List<Contact> contacts =  this.contactService.getAllContacts();
+      for(int i = 0; i < contacts.size(); i++) {
+     	 System.out.println(contacts.get(i));
+      }
+      return contacts;
    }
    
 }

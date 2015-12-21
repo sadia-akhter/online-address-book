@@ -44,6 +44,24 @@ public class Database {
       
 	  return contacts; 
    }
+   
+   public static List<Email> selectAllEmailsByContactId(Connection conn, int contactId) throws Exception {
+	   List<Email> emails = new ArrayList<Email>();
+
+      String query = "SELECT email_id, email FROM emails where contact_id = ?";
+      PreparedStatement prepareStmt = conn.prepareStatement(query);
+      prepareStmt.setInt(1, contactId);
+      ResultSet rs = prepareStmt.executeQuery();
+		      
+      while(rs.next()) {
+         int id = rs.getInt("email_id");
+         String email = rs.getString("email");
+         Email e = new Email(id, email);
+         emails.add(e);
+      } 
+
+	   return emails;
+   }
 
    public static void closeConnection(Connection conn) {
       try {
